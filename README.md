@@ -92,4 +92,23 @@ system组线程，并不会通过start来启动。
 - 如果不想或无法传递InterruptedException（用run方法的时候就不让该方法throws InterruptedException），
 那么应该选择在catch 子句中调用Thread.currentThread().interrupt() 来恢复设置中断状态，以便于在后续的
 执行依然能够检查到刚才发生了中断。
-
+#### 响应中断方法总结列表
+- Object.await()/wait(long)/wait(long, int)
+- Thread.sleep(long)/sleep(long, int)
+- Thread.join()/join(long)/join(long, int)
+- BlockingQueue.take()/put(E)
+- Lock.lockInterruptibly()
+- CountDownLatch.await()
+- CyclicBarrier.await()
+- Exchanger.exchange(V)
+- java.nio.channels.InterruptibleChannel相关方法
+- java.nio.channels.Selector相关方法
+#### 停止线程错误的方法
+- 被启用的stop, suspend和resume方法
+- 用volatile设置boolean标志位
+#### 为什么用volatile停止线程不够全面
+- 解答：这种做法是错误的，或者说是不够全面的，在某些情况下虽然可用，但是某些情况下有严重问题。
+- 这种方法在《Java并发编程实战》中被明确指出了缺陷，我们一起来看看缺陷在哪里：
+此方法错误的原因在于，如果我们遇到了线程长时间阻塞（这是一种很常见的情况，例如生产者消
+费者模式中就存在这样的情况），就没办法及时唤醒它，或者永远都无法唤醒该线程，而interrupt设
+计之初就是把wait等长期阻塞作为一种特殊情况考虑在内了，我们应该用interrupt思维来停止线程。
