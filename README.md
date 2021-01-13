@@ -94,7 +94,7 @@ system组线程，并不会通过start来启动。
 那么应该选择在catch 子句中调用Thread.currentThread().interrupt() 来恢复设置中断状态，以便于在后续的
 执行依然能够检查到刚才发生了中断。
 #### 响应中断方法总结列表
-- Object.await()/wait(long)/wait(long, int)
+- Object.wait()/wait(long)/wait(long, int)
 - Thread.sleep(long)/sleep(long, int)
 - Thread.join()/join(long)/join(long, int)
 - BlockingQueue.take()/put(E)
@@ -123,3 +123,11 @@ system组线程，并不会通过start来启动。
 线程立即返回等方法来达到目的。答案有很多种，因为有很多原因会造成线程阻塞，所以针对不同情况，唤起的方法
 也不同。
 - 总结就是说如果不支持响应中断，就要用特定方法来唤起，没有万能药。
+### 四、线程的生命周期
+#### 六种线程状态
+- `New`: 已将创建但还没有启动，使用new Thread之后还没有调用start方法
+- `Runnable`: 一旦调用start方法线程便会进入Runnable状态，可运行的对应操作系统的Ready和Running状态
+- `Blocked`: 当线程进入到synchronized修饰的代码的时候并且该锁已经被其他线程拿走了线程处于该状态
+- `Waiting`: 当线程执行到Object.wait()、Thread.join()、LockSupport.park()方法的时候会进入到该状态
+- `Timed Waiting`: Object.wait(time)、Thread.sleep(time)、Thread.join(time)、LockSupport.parkNanos(time)、LockSupport.partUntil(time)
+- `Terminated`: run方法正常执行完毕、出现了没有捕获的异常意外终止
