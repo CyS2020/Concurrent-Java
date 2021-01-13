@@ -87,3 +87,9 @@ system组线程，并不会通过start来启动。
 ```
 - 由于run方法内无法抛出checked Exception（只能用try catch），顶层方法必须处理该异常，避免了
 漏掉或者被吞掉的情况，增强了代码的健壮性。
+- while内try/catch问题，当它一旦响应中断后便会吧Interrupt的标志位清除，因此程序会继续运行。
+#### 如果不能抛出中断，要怎么做？
+- 如果不想或无法传递InterruptedException（用run方法的时候就不让该方法throws InterruptedException），
+那么应该选择在catch 子句中调用Thread.currentThread().interrupt() 来恢复设置中断状态，以便于在后续的
+执行依然能够检查到刚才发生了中断。
+
