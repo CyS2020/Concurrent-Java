@@ -132,3 +132,5 @@ system组线程，并不会通过start来启动。
 - `Timed Waiting`: Object.wait(time)、Thread.sleep(time)、Thread.join(time)、LockSupport.parkNanos(time)、LockSupport.partUntil(time)
 - `Terminated`: run方法正常执行完毕、出现了没有捕获的异常意外终止
 ![线程的六种状态](https://raw.githubusercontent.com/CyS2020/Concurrent-Java/master/picture/%E7%BA%BF%E7%A8%8B%E7%9A%846%E4%B8%AA%E7%8A%B6%E6%80%81.png)
+#### 阻塞状态
+- 一般习惯而言，把Blocked(被阻塞)、Waiting(等待)、Timed_waiting(计时等待)都成为阻塞状态
