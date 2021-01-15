@@ -132,5 +132,16 @@ system组线程，并不会通过start来启动。
 - `Timed Waiting`: Object.wait(time)、Thread.sleep(time)、Thread.join(time)、LockSupport.parkNanos(time)、LockSupport.partUntil(time)
 - `Terminated`: run方法正常执行完毕、出现了没有捕获的异常意外终止
 ![线程的六种状态](https://raw.githubusercontent.com/CyS2020/Concurrent-Java/master/picture/%E7%BA%BF%E7%A8%8B%E7%9A%846%E4%B8%AA%E7%8A%B6%E6%80%81.png)
+#### 状态转换的特殊情况
+- 从Object.wait()状态刚被唤醒时，通常不能立刻抢到monitor锁就会从Waiting先进入Blocked状态，等抢到锁再转换到Runnable状态
+- 如果发生异常，可以直接跳到终止Terminated状态，不必再遵循路径，比如可以直接从Waiting直接到Terminated
 #### 阻塞状态
 - 一般习惯而言，把Blocked(被阻塞)、Waiting(等待)、Timed_waiting(计时等待)都成为阻塞状态
+### 五、Thread和Object类重要方法
+#### wait、notify、notifyAll
+- 执行这些方法必须先拥有monitor，也就是synchronized锁，否则是会抛异常的
+- notify只会获取一个，取决于JVM实现，无法提前预知哪个会被唤醒
+- 都属于Object类，都是final native的具体实现是JVM层，也不可以被重写
+- 类似功能的Condition
+- 同时持有多个锁，只会释放wait所对应的对象的那把锁
+
