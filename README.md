@@ -158,3 +158,10 @@ system组线程，并不会通过start来启动。
   - 在同步方法里执行sleep方法时，不会释放monitor锁，但是wait方法会释放monitor锁。
   - sleep方法短暂休眠之后会主动退出阻塞，而没有指定时间的 wait方法则需要被其他线程中断后才能退出阻塞。
   - wait()和notify(),notifyAll()是Object类的方法，sleep()和yield()是Thread类的方法
+#### join
+- 作用：因为新的线程加入了我们，所以我们要等他执行完再出发
+- 用法：mian等待thread1执行完毕，注意谁等谁，在join期间线程主线程是Waiting状态
+- CountDownLatch或CyclicBarrier来代替join，自己不要操作底层方法，使用成熟的工具类
+#### yield
+- 作用:释放我的CPU时间片，JVM不保证遵循yield原则，实际开发中不使用yield
+- yield和sleep区别：是否随时可能再次被调度
