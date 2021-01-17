@@ -144,4 +144,6 @@ system组线程，并不会通过start来启动。
 - 都属于Object类，都是final native的具体实现是JVM层，也不可以被重写
 - 类似功能的Condition
 - 同时持有多个锁，只会释放wait所对应的对象的那把锁
-
+#### sleep
+- 作用：我只想让线程在预期的时间执行，其他时候不需要占用CPU资源
+- 不释放锁，包括synchronized和lock
