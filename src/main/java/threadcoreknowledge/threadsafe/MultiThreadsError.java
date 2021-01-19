@@ -58,7 +58,7 @@ public class MultiThreadsError implements Runnable {
             realIndex.incrementAndGet();
             synchronized (instance) {
                 if (marked[index] && marked[index - 1]) {
-                    System.out.println("发生错误" + i);
+                    System.out.println("发生错误" + index);
                     wrongCount.incrementAndGet();
                 }
                 marked[index] = true;
