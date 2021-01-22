@@ -134,7 +134,7 @@ wait等长期阻塞作为一种特殊情况考虑在内了，我们应该用inte
 - `Waiting`: 当线程执行到Object.wait()、Thread.join()、LockSupport.park()方法的时候会进入到该状态
 - `Timed Waiting`: Object.wait(time)、Thread.sleep(time)、Thread.join(time)、LockSupport.parkNanos(time)、LockSupport.partUntil(time)
 - `Terminated`: run方法正常执行完毕、出现了没有捕获的异常意外终止
-![线程的六种状态](https://raw.githubusercontent.com/CyS2020/Concurrent-Java/master/picture/%E7%BA%BF%E7%A8%8B%E7%9A%846%E4%B8%AA%E7%8A%B6%E6%80%81.png)
+![线程的六种状态](https://github.com/CyS2020/Concurrent-Java/blob/master/src/main/resources/%E7%BA%BF%E7%A8%8B%E7%9A%846%E4%B8%AA%E7%8A%B6%E6%80%81.png?raw=true)
 #### 状态转换的特殊情况
 - 从Object.wait()状态刚被唤醒时，通常不能立刻抢到monitor锁就会从Waiting先进入Blocked状态，等抢到锁再转换到Runnable状态
 - 如果发生异常，可以直接跳到终止Terminated状态，不必再遵循路径，比如可以直接从Waiting直接到Terminated
@@ -258,3 +258,4 @@ set())，或者需要进行额外的同步(比如使用synchronized关键字等)
 - Java 作为高级语言，屏蔽了CPU多层缓存这些底层细节，用 JMM 定义了一套读写内存数据的规范，虽然我们不再需要关心一级缓存和二级缓存的问题，但是，JMM 抽象了主内存和本地内存的概念。
 - 这里说的本地内存并不是真的是一块给每个线程分配的内存，而是 JMM 的一个抽象，是对于寄存器、一级缓存、二级缓存等的抽象。
 主内存和本地内存的图示：
+![主内存和本地内存图示](https://github.com/CyS2020/Concurrent-Java/blob/master/src/main/resources/%E4%B8%BB%E5%86%85%E5%AD%98%E5%92%8C%E5%B7%A5%E4%BD%9C%E5%86%85%E5%AD%981.png?raw=true)
