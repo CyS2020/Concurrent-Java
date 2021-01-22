@@ -284,13 +284,13 @@ set())，或者需要进行额外的同步(比如使用synchronized关键字等)
   - 4. Future
   - 5. 线程池
   - 6. CyclicBarrier
-  #### volatile
-  - 什么是volatile：是一种同步机制，比synchronized或者Lock相关类更轻量，因为使用volatile并不会发生上下文切换等开销很大的行为<br/>
-  如果一个变量被修饰成volatile，那么JVM就知道了这个变量可能会被并发修改<br/>
-  开销小，能力也小，虽说volatile是用来同步的保证线程安全的，但是volatile做不到synchronized那样的原子保护
-  - 不适用场景：a++ 操作
-  - 适用场景1：boolean flag，如果一个变量自始至终只被各个线程赋值，而没有其他操作那么就可以用volatile代替synchronized或者原子变量<br/>
-  因为赋值自身是有原子性的，而volatile又保证了可见性，所以就足以保证线程安全；赋值不取决于之前的状态
-  - 适用场景2：作为刷新之前变量的触发器
+#### volatile
+- 什么是volatile：是一种同步机制，比synchronized或者Lock相关类更轻量，因为使用volatile并不会发生上下文切换等开销很大的行为<br/>
+如果一个变量被修饰成volatile，那么JVM就知道了这个变量可能会被并发修改<br/>
+开销小，能力也小，虽说volatile是用来同步的保证线程安全的，但是volatile做不到synchronized那样的原子保护
+- 不适用场景：a++ 操作
+- 适用场景1：boolean flag，如果一个变量自始至终只被各个线程赋值，而没有其他操作那么就可以用volatile代替synchronized或者原子变量<br/>
+因为赋值自身是有原子性的，而volatile又保证了可见性，所以就足以保证线程安全；赋值不取决于之前的状态
+- 适用场景2：作为刷新之前变量的触发器
   
   
