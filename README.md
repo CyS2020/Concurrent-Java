@@ -257,5 +257,10 @@ set())，或者需要进行额外的同步(比如使用synchronized关键字等)
 #### 什么是JMM里面的主内存和本地内存？
 - Java 作为高级语言，屏蔽了CPU多层缓存这些底层细节，用 JMM 定义了一套读写内存数据的规范，虽然我们不再需要关心一级缓存和二级缓存的问题，但是，JMM 抽象了主内存和本地内存的概念。
 - 这里说的本地内存并不是真的是一块给每个线程分配的内存，而是 JMM 的一个抽象，是对于寄存器、一级缓存、二级缓存等的抽象。
-<img src="https://github.com/CyS2020/Concurrent-Java/blob/master/src/main/resources/%E4%B8%BB%E5%86%85%E5%AD%98%E5%92%8C%E5%B7%A5%E4%BD%9C%E5%86%85%E5%AD%981.png" width = "400" height = "500" alt="主内存和本地内存的图示" align=center />
-
+<img src="https://github.com/CyS2020/Concurrent-Java/blob/master/src/main/resources/%E4%B8%BB%E5%86%85%E5%AD%98%E5%92%8C%E5%B7%A5%E4%BD%9C%E5%86%85%E5%AD%981.png" width = "400" height = "400" alt="主内存和本地内存的图示" align=right />
+#### JMM有以下规定:
+- 所有的变量都存储在主内存中，同时每个线程也有自己独立的工作内存，工作内存中的变量内容是主内存中的拷贝
+- 线程不能直接读写主内存中的变量,而是只能操作自己工作内存中的变量，然后再同步到主内存中
+- 主内存是多个线程共享的，但线程间不共享工作内存,如果线程间需要通信，必须借助主内存中转来完成
+- 所有的共享变量存在于主内存中，每个线程有自己的本地内存，而且线程读写共享数据也是通过本地内存交换的，所以才导致了可见性问题。
+<img src="https://github.com/CyS2020/Concurrent-Java/blob/master/src/main/resources/%E4%B8%BB%E5%86%85%E5%AD%98%E5%92%8C%E5%B7%A5%E4%BD%9C%E5%86%85%E5%AD%982.png" width = "400" height = "400" alt="主内存和本地内存的图示2" align=right />
