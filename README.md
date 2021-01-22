@@ -259,3 +259,4 @@ set())，或者需要进行额外的同步(比如使用synchronized关键字等)
 - 这里说的本地内存并不是真的是一块给每个线程分配的内存，而是 JMM 的一个抽象，是对于寄存器、一级缓存、二级缓存等的抽象。
 主内存和本地内存的图示：
 ![主内存和本地内存图示](https://github.com/CyS2020/Concurrent-Java/blob/master/src/main/resources/%E4%B8%BB%E5%86%85%E5%AD%98%E5%92%8C%E5%B7%A5%E4%BD%9C%E5%86%85%E5%AD%981.png?raw=true)
+<img src="https://github.com/CyS2020/Concurrent-Java/blob/master/src/main/resources/%E4%B8%BB%E5%86%85%E5%AD%98%E5%92%8C%E5%B7%A5%E4%BD%9C%E5%86%85%E5%AD%981.png" width = "200" height = "300" alt="" align=center />
