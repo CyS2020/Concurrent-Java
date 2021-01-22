@@ -264,3 +264,33 @@ set())，或者需要进行额外的同步(比如使用synchronized关键字等)
 - 主内存是多个线程共享的，但线程间不共享工作内存,如果线程间需要通信，必须借助主内存中转来完成
 - 所有的共享变量存在于主内存中，每个线程有自己的本地内存，而且线程读写共享数据也是通过本地内存交换的，所以才导致了可见性问题。<br/>
 <img src="https://github.com/CyS2020/Concurrent-Java/blob/master/src/main/resources/%E4%B8%BB%E5%86%85%E5%AD%98%E5%92%8C%E5%B7%A5%E4%BD%9C%E5%86%85%E5%AD%982.png" width = "400" height = "400" alt="主内存和本地内存的图示2" align=center /><br/>
+#### Happens-Before原则
+- happens-before规则是用来解决可见性问题的：在时间上，动作A发生在B之前，B保证能看见A，这就是happens-before
+- 两个操作可以用happens-before来确定它们的执行顺序：如果一个操作happens-before于另一个操作，那么我们说第一个操作对于第二个操作是可见的。
+- 不是happens-before：两个线程没有互相配合的机制，所以代码X和Y的执行结果并不能保证总被对方看到，这就不具备happens-before
+#### Happens-Before规则有哪些
+- 1. 单线程规则
+- 2. 锁操作(synchronized和Lock)
+- 3. volatile变量：近朱者赤，给b加了volatile不仅b被影响，也可以实现轻量级同步
+- 4. 线程启动
+- 5. 线程join
+- 6. 传递性
+- 7. 中断
+- 8. 构造方法
+- 9. 工具类的Happens-Before原则
+  - 1. 线程安全的容器get一定能看到再次之前的put等存入动作
+  - 2. CountDownLatch
+  - 3. Semaphore
+  - 4. Future
+  - 5. 线程池
+  - 6. CyclicBarrier
+  #### volatile
+  - 什么是volatile：是一种同步机制，比synchronized或者Lock相关类更轻量，因为使用volatile并不会发生上下文切换等开销很大的行为<br/>
+  如果一个变量被修饰成volatile，那么JVM就知道了这个变量可能会被并发修改<br/>
+  开销小，能力也小，虽说volatile是用来同步的保证线程安全的，但是volatile做不到synchronized那样的原子保护
+  - 不适用场景：a++ 操作
+  - 适用场景1：boolean flag，如果一个变量自始至终只被各个线程赋值，而没有其他操作那么就可以用volatile代替synchronized或者原子变量<br/>
+  因为赋值自身是有原子性的，而volatile又保证了可见性，所以就足以保证线程安全；赋值不取决于之前的状态
+  - 适用场景2：作为刷新之前变量的触发器
+  
+  
