@@ -256,6 +256,57 @@ set())，或者需要进行额外的同步(比如使用synchronized关键字等)
   所以会导致有些核心读取的值是一个过期的值
 #### 什么是JMM里面的主内存和本地内存？
 - Java 作为高级语言，屏蔽了CPU多层缓存这些底层细节，用 JMM 定义了一套读写内存数据的规范，虽然我们不再需要关心一级缓存和二级缓存的问题，但是，JMM 抽象了主内存和本地内存的概念。
-- 这里说的本地内存并不是真的是一块给每个线程分配的内存，而是 JMM 的一个抽象，是对于寄存器、一级缓存、二级缓存等的抽象。
-<img src="https://github.com/CyS2020/Concurrent-Java/blob/master/src/main/resources/%E4%B8%BB%E5%86%85%E5%AD%98%E5%92%8C%E5%B7%A5%E4%BD%9C%E5%86%85%E5%AD%981.png" width = "400" height = "500" alt="主内存和本地内存的图示" align=center />
-
+- 这里说的本地内存并不是真的是一块给每个线程分配的内存，而是 JMM 的一个抽象，是对于寄存器、一级缓存、二级缓存等的抽象。<br/>
+<img src="https://github.com/CyS2020/Concurrent-Java/blob/master/src/main/resources/%E4%B8%BB%E5%86%85%E5%AD%98%E5%92%8C%E5%B7%A5%E4%BD%9C%E5%86%85%E5%AD%981.png" width = "400" height = "300" alt="主内存和本地内存的图示" align=center /><br/>
+#### JMM有以下规定:
+- 所有的变量都存储在主内存中，同时每个线程也有自己独立的工作内存，工作内存中的变量内容是主内存中的拷贝
+- 线程不能直接读写主内存中的变量,而是只能操作自己工作内存中的变量，然后再同步到主内存中
+- 主内存是多个线程共享的，但线程间不共享工作内存,如果线程间需要通信，必须借助主内存中转来完成
+- 所有的共享变量存在于主内存中，每个线程有自己的本地内存，而且线程读写共享数据也是通过本地内存交换的，所以才导致了可见性问题。<br/>
+<img src="https://github.com/CyS2020/Concurrent-Java/blob/master/src/main/resources/%E4%B8%BB%E5%86%85%E5%AD%98%E5%92%8C%E5%B7%A5%E4%BD%9C%E5%86%85%E5%AD%982.png" width = "600" height = "300" alt="主内存和本地内存的图示2" align=center /><br/>
+#### Happens-Before原则
+- happens-before规则是用来解决可见性问题的：在时间上，动作A发生在B之前，B保证能看见A，这就是happens-before
+- 两个操作可以用happens-before来确定它们的执行顺序：如果一个操作happens-before于另一个操作，那么我们说第一个操作对于第二个操作是可见的。
+- 不是happens-before：两个线程没有互相配合的机制，所以代码X和Y的执行结果并不能保证总被对方看到，这就不具备happens-before
+#### Happens-Before规则有哪些
+- 1. 单线程规则
+- 2. 锁操作(synchronized和Lock)
+- 3. volatile变量：近朱者赤，给b加了volatile不仅b被影响，也可以实现轻量级同步
+- 4. 线程start
+- 5. 线程join
+- 6. 传递性
+- 7. 中断
+- 8. 构造方法
+- 9. 工具类的Happens-Before原则
+  - 1. 线程安全的容器get一定能看到再次之前的put等存入动作
+  - 2. CountDownLatch
+  - 3. Semaphore
+  - 4. Future
+  - 5. 线程池
+  - 6. CyclicBarrier
+#### volatile
+- 什么是volatile：是一种同步机制，比synchronized或者Lock相关类更轻量，因为使用volatile并不会发生上下文切换等开销很大的行为<br/>
+如果一个变量被修饰成volatile，那么JVM就知道了这个变量可能会被并发修改<br/>
+开销小，能力也小，虽说volatile是用来同步的保证线程安全的，但是volatile做不到synchronized那样的原子保护
+- 不适用场景：a++ 操作
+- 适用场景1：boolean flag，如果一个变量自始至终只被各个线程赋值，而没有其他操作那么就可以用volatile代替synchronized或者原子变量<br/>
+因为赋值自身是有原子性的，而volatile又保证了可见性，所以就足以保证线程安全；赋值不取决于之前的状态
+- 适用场景2：作为刷新之前变量的触发器
+- 两点作用：
+  - 可见性：读取一个volatile变量之前，需要先使相应的本地缓存失效，这样就必须到主内存读取最新值，写一个volatile属性会立即刷入到主内存
+  - 禁止指令重排序优化：解决单丽丽双重锁乱序问题
+#### volatile和synchronized关系
+- volatile在这方面可以看做是轻量版的synchronized：如果一个共享变量自始至终只被各个线程赋值，而没有其他操作，那么就可以用volatile来代替synchronized或代替原子变量，因为赋值自身是有原子性的，而volatile又保证了可见性，所以就足以保证线程安全
+- synchronized不仅保证了原子性还保证了可见性
+#### 原子性
+- 一系列操作，要么全部执行成功，要么全部不执行，不会出现执行一半的情况
+- 除了long和double之外的基本类型(int,byte,boolean,short,char,float)的赋值操作
+- 所有引用reference的赋值操作，不管是32位的机器还是64位机器
+- java.concurrent.Atomic.* 包中所有类的原子操作
+- 在32位上的JVM上，long和double的操作不是原子的，但是在64位的JVM上是原子的，商用Java虚拟机不会出现
+- 简单地把原子操作组合在一起，并不能保证整体依然具有原子性
+#### 单例模式
+- 为什么需要单例模式：节省内存和计算、保证结果正确、方便管理
+- 单例模式使用场景：
+  - 1. 无状态的工具类：比如日志工具类，不管是在哪里使用我们需要的知识它帮我们记录日志信息，除此之外，并不需要它的实例对象上存储任何状态，这时候我们就只需要一个实例对象即可。
+  - 2. 全局信息类：比如我们在类上记录网站的访问次数，我们不希望有的访问被记录在对象A上有的记录在对象B上，这时候我们就让这个类成为单例
