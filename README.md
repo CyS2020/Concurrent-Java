@@ -303,7 +303,7 @@ set())，或者需要进行额外的同步(比如使用synchronized关键字等)
 - 除了long和double之外的基本类型(int,byte,boolean,short,char,float)的赋值操作
 - 所有引用reference的赋值操作，不管是32位的机器还是64位机器
 - java.concurrent.Atomic.* 包中所有类的原子操作
-- 在32位上的JVM上，long和double的操作不是原子的，但是在64位的JVM上是原子的，商用Java虚拟机不会出现
+- 在32位上的JVM上，long和double的操作不是原子的，但是在64位的JVM上是原子的，商用JVM保证原子性
 - 简单地把原子操作组合在一起，并不能保证整体依然具有原子性
 #### 单例模式
 - 为什么需要单例模式：节省内存和计算、保证结果正确、方便管理
