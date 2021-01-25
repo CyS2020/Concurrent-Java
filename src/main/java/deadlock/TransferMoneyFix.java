@@ -5,7 +5,7 @@ import deadlock.TransferMoney.Account;
 /**
  * @author: CyS2020
  * @date: 2021/1/24
- * 描述：转账时候遇到死锁，一旦打开注释便会发生死锁
+ * 描述：修改转账中获取锁的顺序保证不会发生死锁
  */
 public class TransferMoneyFix implements Runnable {
 
