@@ -328,3 +328,8 @@ set())，或者需要进行额外的同步(比如使用synchronized关键字等)
 - 请求与保持条件
 - 不剥夺条件
 - 循环等待条件
+#### 检测死锁
+- 使用jstack
+  - jps：查看java的pid
+  - jstack：查看线程状态
+- 使用ThreadMXBean
