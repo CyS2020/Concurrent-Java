@@ -361,5 +361,11 @@ set())，或者需要进行额外的同步(比如使用synchronized关键字等)
 - Atomic* Array 数组类型原子类：AtomicIntegerArray、AtomicLongArray、AtomicReferenceArray
 - Atomic* Reference 引用类型原子类：AtomicReferenece、AtomicStampedReference、AtomicMarkableReference
 - Atomic* FieldUpdater 升级类型原子类：AtomicIntegerFieldUpdater、AtomicLongFieldUpdater、AtomicReferenceFieldUpdater
+  - 所升级的类中的成员变量的可见性不能是private，不能升级静态变量static修饰的
 - Adder累加器：LongAdder、DoubleAdder
+  - 分段累加，内部有一个base变量和一个Cell[]数组共同参与计数
+  - base变量：竞争不激烈，直接累加到该变量上
+  - Cell[]数组：竞争激烈，各个线程分散累加到自己的槽Cell[i]中
+  - LongAdder适合场景是统计求和计数的场景
 - Accumulator累加器：LongAccumulator、DoubleAccumulator
+  - Accumulator适合需要大量计算，且需要并行计算；计算顺序不能有要求
