@@ -356,3 +356,10 @@ set())，或者需要进行额外的同步(比如使用synchronized关键字等)
 - 饥饿
   - 定义：当线程需要某些资源(例如CPU)，但是始终得不到
   - 其他线程持有锁同时无限循环不释放锁，线程优先级设置的过低
+#### 六类原子类
+- Atomic* 基本类型原子类：AtomicInteger、AtomicLong、AtomicBoolean
+- Atomic* Array 数组类型原子类：AtomicIntegerArray、AtomicLongArray、AtomicReferenceArray
+- Atomic* Reference 引用类型原子类：AtomicReferenece、AtomicStampedReference、AtomicMarkableReference
+- Atomic* FieldUpdater 升级类型原子类：AtomicIntegerfieldUpdater、AtomicLongFieldUpdater、AtomicReferenceFieldUpdater
+- Adder累加器：LongAdder、DoubleAdder
+- Accumulator累加器：LongAccumulator、DoubleAccumulator
