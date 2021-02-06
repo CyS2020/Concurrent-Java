@@ -360,6 +360,6 @@ set())，或者需要进行额外的同步(比如使用synchronized关键字等)
 - Atomic* 基本类型原子类：AtomicInteger、AtomicLong、AtomicBoolean
 - Atomic* Array 数组类型原子类：AtomicIntegerArray、AtomicLongArray、AtomicReferenceArray
 - Atomic* Reference 引用类型原子类：AtomicReferenece、AtomicStampedReference、AtomicMarkableReference
-- Atomic* FieldUpdater 升级类型原子类：AtomicIntegerfieldUpdater、AtomicLongFieldUpdater、AtomicReferenceFieldUpdater
+- Atomic* FieldUpdater 升级类型原子类：AtomicIntegerFieldUpdater、AtomicLongFieldUpdater、AtomicReferenceFieldUpdater
 - Adder累加器：LongAdder、DoubleAdder
 - Accumulator累加器：LongAccumulator、DoubleAccumulator
