@@ -369,3 +369,7 @@ set())，或者需要进行额外的同步(比如使用synchronized关键字等)
   - LongAdder适合场景是统计求和计数的场景
 - Accumulator累加器：LongAccumulator、DoubleAccumulator
   - Accumulator适合需要大量计算，且需要并行计算；计算顺序不能有要求
+#### CAS原理
+- CAS有三个操作数：内存值V、预期值A、要修改的值B，当且仅当预期值A和内存值V相同时，才将内存值V修改为B，否则什么都不做返回现在的V值
+- 缺点：ABA问题-添加版本号、自旋时间过长
+  
