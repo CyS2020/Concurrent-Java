@@ -304,7 +304,15 @@ int a, b, x, y = 0;
 - 适用场景2：作为刷新之前变量的触发器
 - 两点作用：
   - 可见性：读取一个volatile变量之前，需要先使相应的本地缓存失效，这样就必须到主内存读取最新值，写一个volatile属性会立即刷入到主内存
-  - 禁止指令重排序优化：解决单例模式双重锁乱序问题
+  - 禁止指令重排序优化：解决单例模式双重锁乱序问题，A线程1->3->2初始化，B线程在第一次if判断非null，然而并没有初始化结束，直接使用造成NPE
+```
+1：分配对象的内存空间                       1：分配对象的内存空间
+memory = allocate();                       memory = allocate(); 
+2：初始化对象                      -->      3：设置instance指向刚分配的内存地址
+ctorInstance(memory);                      instance = memory;
+3：设置instance指向刚分配的内存地址         2：初始化对象
+instance = memory;                         ctorInstance(memory);
+```
 #### volatile和synchronized关系
 - volatile在这方面可以看做是轻量版的synchronized：如果一个共享变量自始至终只被各个线程赋值，而没有其他操作，那么就可以用volatile来代替synchronized或代替原子变量，因为赋值自身是有原子性的，而volatile又保证了可见性，所以就足以保证线程安全
 - synchronized不仅保证了原子性还保证了可见性
