@@ -117,7 +117,7 @@ system组线程，并不会通过start来启动。
 wait等长期阻塞作为一种特殊情况考虑在内了，我们应该用interrupt思维来停止线程。
 #### Thread相关重要函数解析
 - boolean isInterrupted(): 返回中断状态，不清除中断状态，某个线程实例的状态
-- static booelan interrupted(): 返回中断状态，并清除中断状态，执行方法该的线程的状态
+- static booelan interrupted(): 返回中断状态，并清除中断状态，获取调用该方法的对象所表示的线程
 #### 如何处理不可中断阻塞
 - 如果线程阻塞是由于调用了wait()，sleep()或join()方法，你可以中断线程，通过抛出InterruptedException
 异常来唤醒该线程。但是对于不能响应InterruptedException的阻塞，很遗憾，并没有一个通用的解决方案。但是
