@@ -5,6 +5,8 @@ package threadcoreknowledge.threadsafe;
  * @author: CyS2020
  * @date: 2021/1/20
  * 描述：观察者模式
+ * 构造函数中给传入的资源注册监听器
+ * 构造函数尚未初始化结束，监听器已经开始执行，正常情况下监听到的数字是100
  */
 public class MultiThreadsError5 {
 

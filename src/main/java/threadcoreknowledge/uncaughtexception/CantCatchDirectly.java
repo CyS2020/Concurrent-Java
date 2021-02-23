@@ -8,7 +8,7 @@ package threadcoreknowledge.uncaughtexception;
  * 2. 加了try catch 期望捕获第一个线程的运行234不应该运行，希望打印出Caught Exception
  * 3. 执行时发现，根本没有Caught Exception,线程234依然运行并且抛出异常
  * <p>
- * 说明线程的异常不能用传统方法捕获
+ * 说明线程的异常不能用传统方法捕获，主线程并不能捕获子线程的异常
  */
 public class CantCatchDirectly implements Runnable {
 
@@ -31,7 +31,7 @@ public class CantCatchDirectly implements Runnable {
         try {
             throw new RuntimeException();
         } catch (RuntimeException e) {
-            System.out.println("Caught Exception .");
+            System.out.println("Caught Exception ...");
         }
     }
 }

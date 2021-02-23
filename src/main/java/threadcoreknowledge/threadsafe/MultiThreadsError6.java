@@ -27,7 +27,7 @@ public class MultiThreadsError6 {
 
     public static void main(String[] args) throws InterruptedException {
         MultiThreadsError6 error6 = new MultiThreadsError6();
-        Thread.sleep(1000);
+        //Thread.sleep(1000); 会造成空指针异常
         System.out.println(error6.getStates().get("1"));
     }
 }
