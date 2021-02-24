@@ -24,15 +24,7 @@
 - 1. 从不同的角度看，会有不同的答案。
 - 2. 典型答案是两种，分别是实现Runnable接口和继承Thread类，然后具体展开说；
 - 3. 但是，我们看原理，其实Thread类实现了Runnable接口，并且看Thread类的run方法，会发现
-其实那两种本质都是一样的，run方法的代码如下：
-```
-    @Override
-    public void run() {
-        if (target != null) {
-            target.run();
-        }
-    }
- ```
+其实那两种本质都是一样的，run方法的代码如上：
 - 4. 方法一和方法二，也就是“继承Thread类然后重写run()”和“实现Runnable接口并传入Thread类”在实
 现多线程的本质上，并没有区别，都是最终调用了start()方法来新建线程。这两个方法的最主要区别
 在于run()方法的内容来源：
