@@ -182,7 +182,7 @@ wait等长期阻塞作为一种特殊情况考虑在内了，我们应该用inte
 - 方案一(不推荐)：手动在每个run方法里进行try catch
 - 方案二(推荐)：利用UncaughtExceptionHandler，在主线程中捕获
 #### UncaughtExceptionHandler
-- 主线程可以轻松发现异常，子线程却不行，主线程捕获子线程的异常
+- 主线程可以轻松发现异常，子线程却不行，有了它主线程捕获子线程的异常
 - void uncaughtException(Thread t, Throwable e);
 
 ### 八、线程安全问题
