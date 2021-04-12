@@ -377,5 +377,5 @@ instance = memory;                         ctorInstance(memory);
 则在线程在检查中断标示时如果发现中断标示为true，则会在这些阻塞方法(sleep()、join()、wait()及可中断的通道上的 I/O 操作方法)
 调用处抛出InterruptedException异常，并且在抛出异常后立即将线程的中断标示位清除，即重新设置为false。
 抛出异常是为了线程从阻塞状态醒过来，并在结束线程前让程序员有足够的时间来处理中断请求。
-7. 在执行Thread.currentThread().interrupt()线程并不会停止，可以通过while(!Thread.currentThread().isInterrupted())
+7. 在执行Thread.currentThread().interrupt()线程并不会停止，只是设置中断标志; 可以通过while(!Thread.currentThread().isInterrupted())
 还可以通过if代替while 结合 throw new InterruptedException() 加 catch 的形式跳出执行过程，在catch处理必要的资源关闭操作等
