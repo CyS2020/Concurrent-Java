@@ -185,6 +185,8 @@ wait等长期阻塞作为一种特殊情况考虑在内了，我们应该用inte
 - 主线程可以轻松发现异常，子线程却不行，有了它主线程捕获子线程的异常
 - void uncaughtException(Thread t, Throwable e);
 - 默认JVM是调用未捕获的异常处理器的uncaughtException()方法来处理异常的，并且是直接打印到控制台。
+#### Callable线程内部的异常
+- 线程池Executor会Catch住所有运行时异常，当使用Future.get()获取其结果时，才会抛出这些运行时异常
 
 ### 八、线程安全问题
 #### 什么是线程安全
