@@ -382,3 +382,4 @@ instance = memory;                         ctorInstance(memory);
 7. 在执行Thread.currentThread().interrupt()线程并不会停止，只是设置中断标志;注意catch操作会清除打断标志. 可以通过while(!Thread.currentThread().isInterrupted())
 还可以通过if代替while 结合 throw new InterruptedException() 加 catch 的形式跳出执行过程，在catch处理必要的资源关闭操作等  
 8.绝不应该在代码中忽略InterruptedException 在捕获异常后会清除中断状态，应该重新抛出中断异常，或者应该通过Thread.interrupt()重新中断线程
+9.synchronized与Lock区别：1.底层实现；2.是否可以手动释放；3.是否可中断；4.是否公平；5.是否可以绑定Condition；6.锁的对象
