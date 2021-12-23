@@ -375,11 +375,15 @@ instance = memory;                         ctorInstance(memory);
 3. 基本数据类型包装类与字符串是不可变对象，基本数据类型是值传递，共享他们不会造成线程安全问题
 4. 方法中的局部变量均是存放在自己的方法栈中，不会造成线程安全问题，即使变量类型是对象类型
 5. 多个线程同时执行一个方法修改堆内存，多个线程执行多个方法修改堆内存，都要加锁
-6. 如果一个线程处于了阻塞状态(如线程调用了sleep()、join()、wait()、以及可中断的通道上的 I/O 操作方法后可进入阻塞状态)，
-则在线程在检查中断标示时如果发现中断标示为true，则会在这些阻塞方法(sleep()、join()、wait()及可中断的通道上的 I/O 操作方法)
-调用处抛出InterruptedException异常，并且在抛出异常后立即将线程的中断标示位清除，即重新设置为false。
+6. 如果一个线程处于了阻塞状态(如线程调用了sleep()、join()、wait()、以及可中断的通道上的 I/O 操作方法后可进入阻塞状态)， 则在线程在检查中断标
+示时如果发现中断标示为true，则会在这些阻塞方法(sleep()、join()、wait()及可中断的通道上的 I/O 操作方法)调用处抛出InterruptedException异常，
+并且在抛出异常后立即将线程的中断标示位清除，即重新设置为false。
 抛出异常是为了线程从阻塞状态醒过来，并在结束线程前让程序员有足够的时间来处理中断请求。
-7. 在执行Thread.currentThread().interrupt()线程并不会停止，只是设置中断标志;注意catch操作会清除打断标志. 可以通过while(!Thread.currentThread().isInterrupted())
+7. 在执行Thread.currentThread().interrupt()线程并不会停止，只是设置中断标志；注意catch操作会清除打断标志。可以通过while(!Thread.currentThread().isInterrupted())
 还可以通过if代替while 结合 throw new InterruptedException() 加 catch 的形式跳出执行过程，在catch处理必要的资源关闭操作等  
 8.绝不应该在代码中忽略InterruptedException 在捕获异常后会清除中断状态，应该重新抛出中断异常，或者应该通过Thread.interrupt()重新中断线程
 9.synchronized与Lock区别：1.底层实现；2.是否可以手动释放；3.是否可中断；4.是否公平；5.是否可以绑定Condition；6.锁的对象; https://zhuanlan.zhihu.com/p/126085068
+10若不同的对象中包含相同引用，那么并发操作这些不同的对象也会造成线程安全问题；常见的是容器中的对象--虽然objs与origin不同但内部元素却相同，修改内部元素时很容易造成线程安全问题
+```
+List<Object> objs = new ArrayList<>(origin) 
+```
