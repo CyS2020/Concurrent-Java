@@ -99,7 +99,7 @@ system组线程，并不会通过start来启动。
 - java.nio.channels.InterruptibleChannel相关方法
 - java.nio.channels.Selector相关方法
 #### 停止线程错误的方法
-- 被启用的stop， suspend和resume方法
+- 被禁用的stop， suspend和resume方法
 - 用volatile设置boolean标志位
 #### 为什么用volatile停止线程不够全面
 - 解答：这种做法是错误的，或者说是不够全面的，在某些情况下虽然可用，但是某些情况下有严重问题。
